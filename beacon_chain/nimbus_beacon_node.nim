@@ -2026,7 +2026,7 @@ proc doRunBeaconNode(config: var BeaconNodeConf, rng: ref HmacDrbgContext) {.rai
       version = fullVersionStr,
       bls_backend = $BLS_BACKEND,
       cmdParams = commandLineParams(),
-      config
+      config = $config
 
   template ignoreDeprecatedOption(option: untyped): untyped =
     if config.option.isSome:

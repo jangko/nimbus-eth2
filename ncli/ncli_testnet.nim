@@ -443,15 +443,8 @@ proc doCreateTestnet*(config: CliConfig,
       quit 1
 
     try:
-      let blockAsJson = try:
-        parseJson genesisBlockContents.get
-      except CatchableError as err:
-        error "Failed to parse the genesis block json", err = err.msg
-        quit 1
-      except:
-        # TODO The Nim json library should not raise bare exceptions
-        raiseAssert "The Nim json library raise a bare exception"
-      fromJson(blockAsJson, "", genesisBlock)
+      let blockAsJson = genesisBlockContents.get
+      genesisBlock = JrpcConv.decode(blockAsJson, BlockObject)
     except CatchableError as err:
       error "Failed to load the genesis block from json",
             err = err.msg
@@ -551,7 +544,7 @@ proc sendDeposits(deposits: seq[LaunchPadDeposit],
                   delayGenerator: DelayGenerator = nil) {.async.} =
   notice "Sending deposits",
     web3 = web3Url,
-    depositContract = depositContractAddress
+    depositContract = $depositContractAddress
 
   var web3 = await initWeb3(web3Url, privateKey)
   let gasPrice = int(await web3.provider.eth_gasPrice()) * 2

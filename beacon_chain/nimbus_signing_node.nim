@@ -328,7 +328,7 @@ proc installApiHandlers*(node: SigningNodeRef) =
 
 proc asyncInit(sn: SigningNodeRef) {.async.} =
   notice "Launching signing node", version = fullVersionStr,
-         cmdParams = commandLineParams(), config = sn.config
+         cmdParams = commandLineParams(), config = $sn.config
 
   info "Initializaing validators", path = sn.config.validatorsDir()
   sn.loadKeystores()

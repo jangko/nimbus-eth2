@@ -843,7 +843,8 @@ proc getSuggestedFeeRecipient*(
     # Because the nonexistent validator case was already checked, any failure
     # at this point is serious enough to alert the user.
     warn "Failed to load fee recipient file; falling back to default fee recipient",
-      feeRecipientPath, defaultFeeRecipient,
+      feeRecipientPath = $feeRecipientPath,
+      defaultFeeRecipient = $defaultFeeRecipient,
       err = exc.msg
     err malformedConfigFile
 

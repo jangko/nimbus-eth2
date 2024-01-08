@@ -1209,15 +1209,9 @@ proc ETHExecutionBlockHeaderCreateFromJson(
   ##
   ## See:
   ## * https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_getblockbyhash
-  let node =
-    try:
-      parseJson($blockHeaderJson)
-    except Exception:
-      return nil
-  var data: BlockObject
-  try:
-    fromJson(node, argName = "", data)
-  except KeyError, ValueError:
+  let data = try:
+    JrpcConv.decode($blockHeaderJson, BlockObject)
+  except SerializationError:
     return nil
   if data == nil:
     return nil
@@ -1445,15 +1439,9 @@ proc ETHTransactionsCreateFromJson(
   ##
   ## See:
   ## * https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_getblockbyhash
-  let node =
-    try:
-      parseJson($transactionsJson)
-    except Exception:
-      return nil
-  var datas: seq[TransactionObject]
-  try:
-    fromJson(node, argName = "", datas)
-  except KeyError, ValueError:
+  var datas = try:
+    JrpcConv.decode($transactionsJson, seq[TransactionObject])
+  except SerializationError:
     return nil
 
   var txs = newSeqOfCap[ETHTransaction](datas.len)
@@ -2085,15 +2073,9 @@ proc ETHReceiptsCreateFromJson(
   ##
   ## See:
   ## * https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_gettransactionreceipt
-  let node =
-    try:
-      parseJson($receiptsJson)
-    except Exception:
-      return nil
-  var datas: seq[ReceiptObject]
-  try:
-    fromJson(node, argName = "", datas)
-  except KeyError, ValueError:
+  var datas = try:
+    JrpcConv.decode($receiptsJson, seq[ReceiptObject])
+  except SerializationError:
     return nil
   if datas.len != ETHTransactionsGetCount(transactions):
     return nil

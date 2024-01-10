@@ -308,7 +308,7 @@ proc new*(T: type ValidatorClientRef,
 proc asyncInit(vc: ValidatorClientRef): Future[ValidatorClientRef] {.async.} =
   notice "Launching validator client", version = fullVersionStr,
                                        cmdParams = commandLineParams(),
-                                       config = $vc.config,
+                                       config = vc.config,
                                        beacon_nodes_count = len(vc.beaconNodes)
 
   for node in vc.beaconNodes:

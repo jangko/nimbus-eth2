@@ -1210,7 +1210,10 @@ proc ETHExecutionBlockHeaderCreateFromJson(
   ## See:
   ## * https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_getblockbyhash
   let data = try:
-    JrpcConv.decode($blockHeaderJson, BlockObject)
+    # a direct parameter like JrpcConv.decode($blockHeaderJson, BlockObject)
+    # will cause premature garbage collector kick in.
+    let jsonBytes = $blockHeaderJson
+    JrpcConv.decode(jsonBytes, BlockObject)
   except SerializationError:
     return nil
   if data == nil:
@@ -1440,7 +1443,10 @@ proc ETHTransactionsCreateFromJson(
   ## See:
   ## * https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_getblockbyhash
   var datas = try:
-    JrpcConv.decode($transactionsJson, seq[TransactionObject])
+    # a direct parameter like JrpcConv.decode($transactionsJson, seq[TransactionObject])
+    # will cause premature garbage collector kick in.
+    let jsonBytes = $transactionsJson
+    JrpcConv.decode(jsonBytes, seq[TransactionObject])
   except SerializationError:
     return nil
 
@@ -2074,7 +2080,10 @@ proc ETHReceiptsCreateFromJson(
   ## See:
   ## * https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_gettransactionreceipt
   var datas = try:
-    JrpcConv.decode($receiptsJson, seq[ReceiptObject])
+    # a direct parameter like JrpcConv.decode($receiptsJson, seq[ReceiptObject])
+    # will cause premature garbage collector kick in.
+    let jsonBytes = $receiptsJson
+    JrpcConv.decode(jsonBytes, seq[ReceiptObject])
   except SerializationError:
     return nil
   if datas.len != ETHTransactionsGetCount(transactions):

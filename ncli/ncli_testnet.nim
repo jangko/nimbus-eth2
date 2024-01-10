@@ -544,7 +544,7 @@ proc sendDeposits(deposits: seq[LaunchPadDeposit],
                   delayGenerator: DelayGenerator = nil) {.async.} =
   notice "Sending deposits",
     web3 = web3Url,
-    depositContract = $depositContractAddress
+    depositContract = depositContractAddress
 
   var web3 = await initWeb3(web3Url, privateKey)
   let gasPrice = int(await web3.provider.eth_gasPrice()) * 2

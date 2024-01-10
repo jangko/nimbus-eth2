@@ -1000,14 +1000,14 @@ proc waitELToSyncDeposits(connection: ELConnection,
         warn "Failed to obtain the most recent known block from the execution " &
              "layer node (the node is probably not synced)",
              url = connection.engineUrl.url,
-             blk = $minimalRequiredBlock,
+             blk = minimalRequiredBlock,
              err = err.msg
       elif attempt mod 60 == 0:
         # This warning will be produced every 30 minutes
         warn "Still failing to obtain the most recent known block from the " &
              "execution layer node (the node is probably still not synced)",
              url = connection.engineUrl.url,
-             blk = $minimalRequiredBlock,
+             blk = minimalRequiredBlock,
              err = err.msg
       inc attempt
       await sleepAsync(seconds(30))
@@ -1230,7 +1230,7 @@ proc forkchoiceUpdatedForSingleEL(
 
   if response.payloadStatus.status notin {syncing, valid, invalid}:
     debug "Invalid fork-choice updated response from the EL",
-          payloadStatus = $response.payloadStatus
+          payloadStatus = response.payloadStatus
     return
 
   if response.payloadStatus.status == PayloadExecutionStatus.valid and

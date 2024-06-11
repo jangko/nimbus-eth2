@@ -255,12 +255,12 @@ when const_preset == "gnosis":
   const
     gnosisMetadata = loadCompileTimeNetworkMetadata(
       vendorDir & "/gnosis-chain-configs/mainnet",
-      none(Eth1Network),
+      Opt.none(Eth1Network),
       useBakedInGenesis = some "gnosis")
 
     chiadoMetadata = loadCompileTimeNetworkMetadata(
       vendorDir & "/gnosis-chain-configs/chiado",
-      none(Eth1Network),
+      Opt.none(Eth1Network),
       useBakedInGenesis = some "chiado")
 
   static:

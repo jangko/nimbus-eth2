@@ -256,12 +256,12 @@ when const_preset == "gnosis":
     gnosisMetadata = loadCompileTimeNetworkMetadata(
       vendorDir & "/gnosis-chain-configs/mainnet",
       Opt.none(Eth1Network),
-      useBakedInGenesis = some "gnosis")
+      useBakedInGenesis = Opt.some "gnosis")
 
     chiadoMetadata = loadCompileTimeNetworkMetadata(
       vendorDir & "/gnosis-chain-configs/chiado",
       Opt.none(Eth1Network),
-      useBakedInGenesis = some "chiado")
+      useBakedInGenesis = Opt.some "chiado")
 
   static:
     for network in [gnosisMetadata, chiadoMetadata]:

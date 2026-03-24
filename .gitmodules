@@ -201,7 +201,7 @@
 	branch = master
 [submodule "vendor/nim-lsquic"]
 	path = vendor/nim-lsquic
-	url = https://github.com/vacp2p/nim-lsquic.git
+	url = https://github.com/jangko/nim-lsquic.git
 	branch = main
 [submodule "vendor/nim-intops"]
 	path = vendor/nim-intops
